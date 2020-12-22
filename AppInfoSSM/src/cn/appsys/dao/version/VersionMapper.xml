@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="cn.appsys.dao.version.VersionMapper"> 
+ 	<select id="getById" resultType="Version"> 
+ 	  		  	 SELECT * ,(SELECT 	softwareName	FROM appinfodb.app_info WHERE id=v.appId ) AS appName,
+	  	 (SELECT valueName FROM appinfodb.data_dictionary WHERE typeName="APP状态" AND valueId=v.publishStatus) as publishStatusName
+	  	 	FROM 	appinfodb.app_version v
+	  <trim prefix="where" prefixOverrides="and | or">
+			<if test="vid !=0">
+			 		v.id=#{vid}
+			</if>  
+			</trim>  
+	</select> 
+	 <select id="getListById" resultType="Version"> 
+ 	  		  	 SELECT * ,(SELECT 	softwareName	FROM appinfodb.app_info WHERE id=v.appId ) AS appName,
+	  	 (SELECT valueName FROM appinfodb.data_dictionary WHERE typeName="APP状态" AND valueId=v.publishStatus) as publishStatusName
+	  	 	FROM 	appinfodb.app_version v
+	  <trim prefix="where" prefixOverrides="and | or">
+			<if test="id !=0">
+			 		 v.appId=#{id}
+			</if>  
+			</trim>  
+	</select>
+	
+	
+	 <select id="getLocPath" resultType="String"> 
+ 	  		  	 
+	   SELECT  apkLocPath 	FROM 	appinfodb.app_version WHERE id=#{id}
+	</select>
+	<delete id="del">
+	DELETE FROM appinfodb.app_version
+	 <trim prefix="where" prefixOverrides="and | or">
+			<if test="id !=0">
+			 	  	appId = #{id};
+			</if>  
+			</trim>  	
+	</delete>
+	<select id="findIdByAid"  resultType="int">
+	SELECT id FROM appinfodb.app_version WHERE appId=#{id} ORDER BY
+creationDate DESC  LIMIT 0,1
+	</select> 
+	
+	<insert id="add" parameterType="Version"> 
+		INSERT INTO appinfodb.app_version 
+	(
+	appId, 
+	versionNo, 
+	versionInfo, 
+	publishStatus, 
+	downloadLink, 
+	versionSize, 
+	createdBy, 
+	creationDate,   
+	apkLocPath, 
+	apkFileName
+	)
+	VALUES
+	(
+	#{appId}, 
+	#{versionNo}, 
+	#{versionInfo}, 
+	#{publishStatus}, 
+	#{downloadLink}, 
+	#{versionSize}, 
+	#{createdBy}, 
+	#{creationDate},  
+	#{apkLocPath}, 
+	#{apkFileName}
+	);
+		
+	</insert>
+	<update id="update" parameterType="Version">
+	
+UPDATE appinfodb.app_version 
+	SET 
+	versionInfo = #{versionInfo},  
+	downloadLink = #{downloadLink}, 
+	versionSize = #{versionSize},  
+	modifyBy = #{modifyBy}, 
+	modifyDate = #{modifyDate}, 
+	apkLocPath = #{apkLocPath}, 
+	apkFileName = #{apkFileName}
+	
+	WHERE
+	id = #{id} ;
+	</update>
+ </mapper>  
+  

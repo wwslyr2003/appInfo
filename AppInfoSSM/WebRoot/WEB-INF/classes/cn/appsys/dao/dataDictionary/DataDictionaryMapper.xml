@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="cn.appsys.dao.dataDictionary.DataDictionaryMapper"> 
+ 	 <!-- 查询显示列表 -->
+	<select id="getFlatFormName" resultType="DataDictionary">
+ 		SELECT valueName FROM data_dictionary WHERE  typeName="所属平台"
+	</select>
+	<select id="getStatusName" resultType="DataDictionary">
+ 		SELECT valueName FROM data_dictionary WHERE  typeName="APP状态"
+	</select>
+ </mapper>  
+  

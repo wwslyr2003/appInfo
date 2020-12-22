@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="cn.appsys.dao.category.CategoryMapper"> 
+ <select id="getCategory1List" resultType="Category">
+ 	SELECT*FROM  appinfodb.app_category  WHERE parentId IS NULL 
+ </select>
+	<select id="getCategoryOtherList" resultType="Category">
+			SELECT*FROM  appinfodb.app_category   
+	 	 <trim prefix="where" prefixOverrides="and | or">
+			<if test="preantId !=0">
+			 	 	parentId =#{preantId}
+			</if>  
+			<if test="preantId ==0">
+			 	 	  parentId IS NULL 
+			</if>  
+			</trim> 
+	</select>
+ </mapper>  
+  

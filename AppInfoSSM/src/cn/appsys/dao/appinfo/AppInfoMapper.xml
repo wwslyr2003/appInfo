@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="cn.appsys.dao.appinfo.AppInfoMapper"> 
+ 	 <!-- 查询显示列表 -->
+	<select id="getAppInfoList" resultType="Info">
+		SELECT i.*,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel1) AS categoryLevel1Name,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel2) AS categoryLevel2Name,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel3) AS categoryLevel3Name,
+	(SELECT valueName FROM data_dictionary WHERE valueId = i.flatformId and typeName="所属平台") AS flatformName,
+	(SELECT valueName FROM data_dictionary WHERE valueId = i.status and typeName="APP状态") AS statusName,
+	(SELECT versionNo FROM app_version WHERE id=i.versionId) AS versionNo
+ 	FROM app_info i 
+	 			  <trim prefix="where" prefixOverrides="and | or">
+			<if test="softwareName != null and  softwareName != '' ">
+		 		and i.softwareName LIKE CONCAT('%',#{softwareName},'%') 
+		 	</if>
+		
+		 	<if test="flatformId != null and flatformId != 0 ">
+		 		and i.flatformId=#{flatformId}
+		 	</if>
+		 	<if test="categoryLevel1 != null and categoryLevel1 != 0 ">
+		 		 and i.categoryLevel1 =#{categoryLevel1}
+		 	</if>
+		 	<if test="categoryLevel2 != null and categoryLevel2 != 0 ">
+		 		and i.categoryLevel2 =#{categoryLevel2}
+		 	</if>
+		 	<if test="categoryLevel3 != null and categoryLevel3 != 0 ">
+		 		and i.categoryLevel3 =#{categoryLevel3}
+		 	</if>
+		  </trim>
+		limit #{currentPageNo},#{pageSize}
+	</select>
+	 
+	<!-- 查询总记录数 -->
+	<select id="getAppInfoCount" resultType="int">
+		SELECT COUNT(*)	FROM app_info i 
+		  <trim prefix="where" prefixOverrides="and | or">
+			<if test="softwareName != null and  softwareName != '' ">
+		 		and i.softwareName LIKE CONCAT('%',#{softwareName},'%') 
+		 	</if>
+		
+		 	
+	  	<if test="flatformId != null and flatformId != 0 ">
+		 		and i.flatformId=#{flatformId}
+		 	</if>
+		 	<if test="categoryLevel1 != null and categoryLevel1 != 0 ">
+		 		 and i.categoryLevel1 =#{categoryLevel1}
+		 	</if>
+		 	<if test="categoryLevel2 != null and categoryLevel2 != 0 ">
+		 		and i.categoryLevel2 =#{categoryLevel2}
+		 	</if>
+		 	<if test="categoryLevel3 != null and categoryLevel3 != 0 ">
+		 		and i.categoryLevel3 =#{categoryLevel3}
+		 
+		 	</if>  
+		  </trim>
+	</select> 
+	
+	
+	
+	
+	<!-- dev查询 -->
+	
+	
+	<select id="devgetAppInfoList" resultType="Info">
+		SELECT i.*,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel1) AS categoryLevel1Name,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel2) AS categoryLevel2Name,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel3) AS categoryLevel3Name,
+	(SELECT valueName FROM data_dictionary WHERE valueId = i.flatformId and typeName="所属平台") AS flatformName,
+	(SELECT valueName FROM data_dictionary WHERE valueId = i.status and typeName="APP状态") AS statusName,
+	(SELECT versionNo FROM app_version WHERE id=i.versionId) AS versionNo
+ 	FROM app_info i 
+	 			  <trim prefix="where" prefixOverrides="and | or">
+			<if test="softwareName != null and  softwareName != '' ">
+		 		and i.softwareName LIKE CONCAT('%',#{softwareName},'%') 
+		 	</if>
+		
+		 	<if test="flatformId != null and flatformId != 0 ">
+		 		and i.flatformId=#{flatformId}
+		 	</if>
+		 	<if test="categoryLevel1 != null and categoryLevel1 != 0 ">
+		 		 and i.categoryLevel1 =#{categoryLevel1}
+		 	</if>
+		 	<if test="categoryLevel2 != null and categoryLevel2 != 0 ">
+		 		and i.categoryLevel2 =#{categoryLevel2}
+		 	</if>
+		 	<if test="categoryLevel3 != null and categoryLevel3 != 0 ">
+		 		and i.categoryLevel3 =#{categoryLevel3}
+		 	</if>
+			 
+		 	<if test="devId != null and devId != 0 ">
+		 		and i.devId =#{devId}
+		 	</if>
+		 	<if test="status != null and status != 0 ">
+		 		and i.status =#{status}
+		 	</if>
+		  </trim>
+		limit #{currentPageNo},#{pageSize}
+	</select>
+	<!-- 查询总记录数 -->
+	<select id="devgetAppInfoCount" resultType="int">
+		SELECT COUNT(*)	FROM app_info i 
+		  <trim prefix="where" prefixOverrides="and | or">
+			<if test="softwareName != null and  softwareName != '' ">
+		 		and i.softwareName LIKE CONCAT('%',#{softwareName},'%') 
+		 	</if>
+		
+		 	
+	  	<if test="flatformId != null and flatformId != 0 ">
+		 		and i.flatformId=#{flatformId}
+		 	</if>
+		 	<if test="categoryLevel1 != null and categoryLevel1 != 0 ">
+		 		 and i.categoryLevel1 =#{categoryLevel1}
+		 	</if>
+		 	<if test="categoryLevel2 != null and categoryLevel2 != 0 ">
+		 		and i.categoryLevel2 =#{categoryLevel2}
+		 	</if>
+		 	<if test="categoryLevel3 != null and categoryLevel3 != 0 ">
+		 		and i.categoryLevel3 =#{categoryLevel3}
+		 
+		 	</if>  
+		 	<if test="devId != null and devId != 0 ">
+		 		and i.devId =#{devId}
+		 	</if>
+		 	<if test="status != null and status != 0 ">
+		 		and i.status =#{status}
+		 	</if>
+		  </trim>
+	</select>
+	<select id="getAppInfoById" resultType="Info">
+	SELECT i.*,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel1) AS categoryLevel1Name,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel2) AS categoryLevel2Name,
+	(SELECT categoryName FROM app_category WHERE id= i.categoryLevel3) AS categoryLevel3Name,
+	(SELECT valueName FROM data_dictionary WHERE valueId = i.flatformId and typeName="所属平台") AS flatformName,
+	(SELECT valueName FROM data_dictionary WHERE valueId = i.status and typeName="APP状态") AS statusName,
+	(SELECT versionNo FROM app_version WHERE id=i.versionId) AS versionNo
+ 	FROM app_info i 
+	  <trim prefix="where" prefixOverrides="and | or">
+			<if test="aid !=0">
+			 		i.id=#{aid}
+			</if>  
+			</trim>  
+	</select>
+	<!-- 
+	public int updateAppInfoStatus(	@Param("id")int id,@Param("status")int status )throws Exception; -->
+	<update  id="updateAppInfoStatus"  >
+			UPDATE appinfodb.app_info 
+			SET 
+			STATUS = #{status} 
+			WHERE
+			id =#{id}  ;
+	
+	</update>
+	
+	<delete id="del">
+	DELETE FROM appinfodb.app_info 
+	 <trim prefix="where" prefixOverrides="and | or">
+			<if test="id !=0">
+			 	 	id = #{id} ;
+			</if>  
+			</trim>  	
+	</delete>
+	<!-- public  int add(Info info);
+	public int getAPKcount(@Param("ApkName")String ApkName); -->
+	<select id="getAPKcount" resultType="int">
+		SELECT 	 COUNT(1) FROM 	appinfodb.app_info WHERE APKName=#{ApkName}
+	</select>
+	<insert id="add" parameterType="Info">
+	INSERT INTO appinfodb.app_info 
+	( 
+	softwareName, 
+	APKName, 
+	supportROM, 
+	interfaceLanguage, 
+	softwareSize,  
+	devId, 
+	appInfo, 
+	status,  
+	categoryLevel3, 
+	downloads, 
+	createdBy, 
+	creationDate,  
+	categoryLevel1, 
+	categoryLevel2, 
+	logoPicPath, 
+	logoLocPath,
+	flatformId
+	)
+	VALUES
+	( 
+	#{softwareName}, 
+	#{APKName}, 
+	#{supportROM}, 
+	#{interfaceLanguage}, 
+	#{softwareSize},  
+	#{devId}, 
+	#{appInfo}, 
+	#{status},  
+	#{categoryLevel3}, 
+	#{downloads}, 
+	#{createdBy}, 
+	#{creationDate},  
+	#{categoryLevel1}, 
+	#{categoryLevel2}, 
+	#{logoPicPath}, 
+	#{logoLocPath},
+	#{flatformId}
+	);
+	 
+	</insert>
+	
+		<update id="update" parameterType="Info">
+		 
+UPDATE appinfodb.app_info 
+	SET 
+	softwareName = #{softwareName}, 
+	APKName = #{APKName}, 
+	supportROM = #{supportROM}, 
+	interfaceLanguage = #{interfaceLanguage}, 
+	softwareSize = #{softwareSize}, 
+	updateDate = #{updateDate}, 
+	devId = #{devId}, 
+	appInfo = #{appInfo}, 
+	<if test="status==1">
+			 	STATUS = #{status},
+			</if>  
+	  
+	flatformId = #{flatformId}, 
+	categoryLevel3 = #{categoryLevel3}, 
+	downloads = #{downloads},  
+	modifyBy = #{modifyBy}, 
+	modifyDate = #{modifyDate}, 
+	categoryLevel1 = #{categoryLevel1}, 
+	categoryLevel2 = #{categoryLevel2}, 
+	logoPicPath = #{logoPicPath}, 
+	logoLocPath = #{logoLocPath}
+	
+	WHERE
+	id = #{id} ;
+		</update> 
+	 <update id="updateversionId">
+	  UPDATE appinfodb.app_info SET versionId = #{versionId} WHERE id =#{id} ;
+	 </update> 
+	  
+	 <select id="getLocPath" resultType="String">
+	 	SELECT logoLocPath  FROM 	appinfodb.app_info  WHERE id=#{id}
+	 </select>
+ </mapper>  
+  
